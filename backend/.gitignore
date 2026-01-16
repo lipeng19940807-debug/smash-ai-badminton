@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+env/
+.venv
+
+# Environment variables
+.env
+
+# Uploads
+uploads/original/*
+uploads/processed/*
+uploads/thumbnails/*
+!uploads/original/.gitkeep
+!uploads/processed/.gitkeep
+!uploads/thumbnails/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/

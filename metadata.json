@@ -1,0 +1,8 @@
+{
+  "name": "SmashAI - Badminton Analysis",
+  "description": "AI-powered badminton smash analysis tool measuring speed, technique, and pose.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
