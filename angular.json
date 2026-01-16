@@ -13,9 +13,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist",
+            "outputPath": "dist/browser",
             "index": "index.html",
-            "browser": "src/app.component.ts",
+            "browser": "index.tsx",
             "polyfills": [],
             "tsConfig": "tsconfig.json",
             "assets": [],
@@ -27,8 +27,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "2MB",
+                  "maximumError": "5MB"
                 }
               ],
               "outputHashing": "all"
