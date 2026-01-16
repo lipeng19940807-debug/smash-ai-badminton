@@ -56,15 +56,29 @@ class VideoService:
         original_path = os.path.join(self.upload_dir, "original", stored_filename)
         
         try:
-            # 保存文件
-            contents = await file.read()
-            file_size = len(contents)
-            
-            # 验证文件大小
-            validate_video_size(file_size)
+            # 流式保存文件，防止内存溢出
+            file_size = 0
+            CHUNK_SIZE = 1024 * 1024  # 1MB chunks
             
             with open(original_path, "wb") as f:
-                f.write(contents)
+                while True:
+                    chunk = await file.read(CHUNK_SIZE)
+                    if not chunk:
+                        break
+                    file_size += len(chunk)
+                    f.write(chunk)
+                    
+                    # 检查文件大小是否超过限制
+                    if file_size > settings.max_video_size_bytes:
+                        f.close()
+                        os.remove(original_path)
+                        raise HTTPException(
+                            status_code=status.HTTP_400_BAD_REQUEST,
+                            detail=f"视频文件过大 (超过 {settings.max_video_size_mb}MB)"
+                        )
+            
+            # 指针回到文件开头(如果后续还需要读取，但这里都是用路径处理了，所以不需要seek)
+            # await file.seek(0)
             
             # 4. 获取视频信息
             try:
