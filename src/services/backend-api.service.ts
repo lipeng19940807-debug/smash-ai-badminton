@@ -5,8 +5,8 @@ import { tap } from 'rxjs/operators';
 
 import { environment } from '../environments/environment';
 
-// API 基础 URL - 从环境变量读取
-const API_BASE_URL = environment.apiUrl;
+// API 基础 URL - 硬编码以确保生产环境正确
+const API_BASE_URL = '/api';
 
 // 认证相关接口
 export interface RegisterRequest {
