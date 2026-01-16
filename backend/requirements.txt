@@ -14,6 +14,7 @@ python-dotenv==1.0.1
 # Pydantic for data validation
 pydantic==2.10.5
 pydantic-settings==2.7.0
+email-validator>=2.0.0
 
 # AI Integration
 google-generativeai==0.8.3
