@@ -3,8 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
+import { environment } from '../environments/environment';
+
 // API 基础 URL - 从环境变量读取
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = environment.apiUrl;
 
 // 认证相关接口
 export interface RegisterRequest {
