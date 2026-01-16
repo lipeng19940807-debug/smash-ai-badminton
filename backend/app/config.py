@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     
     # 服务器配置
     host: str = "0.0.0.0"
-    port: int = 8000
+    port: int = 8000  # 默认值，会被环境变量 PORT 覆盖
     
     # 文件存储配置
     upload_dir: str = "./uploads"
