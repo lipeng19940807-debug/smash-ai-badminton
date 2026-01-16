@@ -6,7 +6,7 @@ import { DecimalPipe } from '@angular/common';
 @Component({
   selector: 'app-upload',
   standalone: true,
-  imports: [DecimalPipe],
+  imports: [],
   template: `
     <div class="flex flex-col min-h-screen bg-background-dark text-white overflow-x-hidden max-w-[480px] mx-auto">
       <!-- Hidden Input -->
@@ -96,7 +96,7 @@ export class UploadComponent {
 
   videoDuration = signal(0);
   // Default trim range is handled by service, we just ensure file is loaded
-  
+
   goBack() {
     this.router.navigate(['/dashboard']);
   }
@@ -111,8 +111,8 @@ export class UploadComponent {
       const file = input.files[0];
       const url = URL.createObjectURL(file);
       this.smashService.uploadedVideoUrl.set(url);
-      this.smashService.uploadedFile.set(file); 
-      
+      this.smashService.uploadedFile.set(file);
+
       // Default to start 0
       this.smashService.trimStart.set(0);
       // We will update end when metadata loads
