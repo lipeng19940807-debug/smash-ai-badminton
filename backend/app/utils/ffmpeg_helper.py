@@ -2,6 +2,7 @@
 FFmpeg 视频处理工具
 """
 import os
+import shutil
 import ffmpeg
 from typing import Tuple, Optional
 from app.config import settings
@@ -9,6 +10,20 @@ from app.config import settings
 
 class FFmpegHelper:
     """FFmpeg 视频处理辅助类"""
+    
+    @staticmethod
+    def _check_ffmpeg_installed():
+        """检查 FFmpeg 是否已安装"""
+        ffmpeg_path = shutil.which('ffmpeg')
+        ffprobe_path = shutil.which('ffprobe')
+        
+        if not ffmpeg_path or not ffprobe_path:
+            error_msg = "FFmpeg 未安装或不在 PATH 中。"
+            error_msg += "\n请安装 FFmpeg："
+            error_msg += "\n  macOS: brew install ffmpeg"
+            error_msg += "\n  Ubuntu/Debian: sudo apt-get install ffmpeg"
+            error_msg += "\n  Windows: 下载 https://ffmpeg.org/download.html"
+            raise RuntimeError(error_msg)
     
     @staticmethod
     def get_video_info(file_path: str) -> dict:
@@ -22,6 +37,12 @@ class FFmpegHelper:
             包含视频信息的字典(duration, width, height, codec等)
         """
         try:
+            # 检查 FFmpeg 是否安装
+            FFmpegHelper._check_ffmpeg_installed()
+            
+            if not os.path.exists(file_path):
+                raise FileNotFoundError(f"视频文件不存在: {file_path}")
+            
             probe = ffmpeg.probe(file_path)
             video_stream = next(
                 (stream for stream in probe['streams'] if stream['codec_type'] == 'video'),
@@ -64,6 +85,7 @@ class FFmpegHelper:
             end_time: 结束时间（秒）
         """
         try:
+            FFmpegHelper._check_ffmpeg_installed()
             duration = end_time - start_time
             
             (
@@ -99,6 +121,7 @@ class FFmpegHelper:
             crf: 质量参数（18-28，数值越大文件越小，质量越低）
         """
         try:
+            FFmpegHelper._check_ffmpeg_installed()
             # 获取视频信息
             info = FFmpegHelper.get_video_info(input_path)
             duration = info['duration']
@@ -158,6 +181,7 @@ class FFmpegHelper:
             time_offset: 截取时间点（秒），如果为None则取视频中间帧
         """
         try:
+            FFmpegHelper._check_ffmpeg_installed()
             # 如果未指定时间点，取视频中间帧
             if time_offset is None:
                 info = FFmpegHelper.get_video_info(video_path)

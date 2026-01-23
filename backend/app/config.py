@@ -20,6 +20,10 @@ class Settings(BaseSettings):
     
     # Gemini API 配置
     gemini_api_key: str
+
+    # 微信配置
+    wechat_app_id: str
+    wechat_app_secret: str
     
     # 服务器配置
     host: str = "0.0.0.0"

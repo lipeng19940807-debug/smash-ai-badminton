@@ -3,6 +3,7 @@
 """
 import os
 import uuid
+import httpx
 from datetime import datetime
 from typing import Optional, Tuple
 from fastapi import UploadFile, HTTPException, status
@@ -24,6 +25,103 @@ class VideoService:
         os.makedirs(os.path.join(self.upload_dir, "processed"), exist_ok=True)
         os.makedirs(os.path.join(self.upload_dir, "thumbnails"), exist_ok=True)
     
+    async def sync_cloud_video(
+        self,
+        file_id: str,
+        user_id: str,
+        trim_start: Optional[float] = None,
+        trim_end: Optional[float] = None
+    ) -> dict:
+        """
+        从微信云存储同步视频并处理
+        """
+        # 1. 微信云托管内部接口换取下载链接
+        # 微信云托管内部可以通过该地址获取文件下载链接，无需额外鉴权
+        try:
+            async with httpx.AsyncClient() as client:
+                # 微信云托管内部 API
+                cloud_api_url = "http://api.weixin.qq.com/tcb/batchdownloadfile"
+                payload = {
+                    "env": "cloud1-1grfk67f82062cc1",
+                    "file_list": [
+                        {
+                            "fileid": file_id,
+                            "max_age": 7200
+                        }
+                    ]
+                }
+                response = await client.post(cloud_api_url, json=payload)
+                res_data = response.json()
+                
+                if res_data.get("errcode") == 0 and res_data.get("file_list"):
+                    download_url = res_data["file_list"][0]["download_url"]
+                else:
+                    raise Exception(f"获取下载链接失败: {res_data.get('errmsg')}")
+
+                # 2. 下载文件到本地 original 目录
+                unique_id = str(uuid.uuid4())
+                stored_filename = f"{unique_id}.mp4"
+                original_path = os.path.join(self.upload_dir, "original", stored_filename)
+                
+                async with client.stream("GET", download_url) as r:
+                    with open(original_path, "wb") as f:
+                        async for chunk in r.aiter_bytes():
+                            f.write(chunk)
+                
+                # 3. 后续处理（复用现有逻辑）
+                # 获取视频时长
+                video_info = FFmpegHelper.get_video_info(original_path)
+                duration = video_info['duration']
+                
+                # 处理视频
+                processed_filename = f"{unique_id}_processed.mp4"
+                processed_path = os.path.join(self.upload_dir, "processed", processed_filename)
+                
+                _, processed_info = FFmpegHelper.process_video(
+                    input_path=original_path,
+                    output_path=processed_path,
+                    trim_start=trim_start,
+                    trim_end=trim_end,
+                    compress=True
+                )
+                
+                # 生成缩略图
+                thumbnail_filename = f"{unique_id}_thumb.jpg"
+                thumbnail_path = os.path.join(self.upload_dir, "thumbnails", thumbnail_filename)
+                FFmpegHelper.generate_thumbnail(processed_path, thumbnail_path)
+                
+                # 保存数据库
+                video_data = {
+                    "user_id": user_id,
+                    "original_filename": f"cloud_{unique_id[:8]}.mp4",
+                    "stored_filename": processed_filename,
+                    "file_path": processed_path,
+                    "file_size": os.path.getsize(processed_path),
+                    "duration": processed_info['duration'],
+                    "thumbnail_path": thumbnail_path,
+                    "trim_start": trim_start or 0.0,
+                    "trim_end": trim_end,
+                }
+                
+                db_res = self.db.table("videos").insert(video_data).execute()
+                video_record = db_res.data[0]
+                
+                return {
+                    "id": video_record["id"],
+                    "original_filename": video_record["original_filename"],
+                    "file_path": video_record["file_path"],
+                    "duration": video_record["duration"],
+                    "file_size": video_record["file_size"],
+                    "thumbnail_path": video_record["thumbnail_path"],
+                    "uploaded_at": video_record["uploaded_at"]
+                }
+        except Exception as e:
+            print(f"云存储视频同步失败: {str(e)}")
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"从云存储同步视频失败: {str(e)}"
+            )
+
     async def upload_video(
         self,
         file: UploadFile,
@@ -160,13 +258,29 @@ class VideoService:
                 # 清理原始文件（可选，如果不需要保留）
                 # os.remove(original_path)
                 
+                # 构建缩略图 URL（如果存在）
+                thumbnail_url = None
+                if video_record.get("thumbnail_path"):
+                    # 将本地路径转换为可访问的 URL
+                    # 例如: ./uploads/thumbnails/xxx.jpg -> /uploads/thumbnails/xxx.jpg
+                    thumbnail_path = video_record["thumbnail_path"]
+                    if thumbnail_path.startswith("./"):
+                        thumbnail_path = thumbnail_path[2:]
+                    elif not thumbnail_path.startswith("/"):
+                        thumbnail_path = "/" + thumbnail_path
+                    # 移除 uploads 前缀（因为静态文件挂载在 /uploads）
+                    if thumbnail_path.startswith("/uploads/"):
+                        thumbnail_url = thumbnail_path
+                    else:
+                        thumbnail_url = f"/uploads/{thumbnail_path}"
+                
                 return {
                     "id": video_record["id"],
                     "original_filename": video_record["original_filename"],
                     "file_path": video_record["file_path"],
                     "duration": video_record["duration"],
                     "file_size": video_record["file_size"],
-                    "thumbnail_path": video_record.get("thumbnail_path"),
+                    "thumbnail_path": thumbnail_url,  # 返回 URL 而不是本地路径
                     "uploaded_at": video_record["uploaded_at"]
                 }
             

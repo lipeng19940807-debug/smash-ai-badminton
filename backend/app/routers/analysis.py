@@ -27,9 +27,23 @@ async def start_analysis(
     
     分析过程可能需要 10-30 秒，请耐心等待
     """
-    analysis_service = AnalysisService(db)
-    result = await analysis_service.analyze_video(request.video_id, current_user["id"])
-    return result
+    try:
+        print(f"收到分析请求: video_id={request.video_id}, user_id={current_user['id']}")
+        analysis_service = AnalysisService(db)
+        result = await analysis_service.analyze_video(request.video_id, current_user["id"])
+        print(f"分析成功完成: {result.get('id', 'N/A')}")
+        return result
+    except HTTPException:
+        raise
+    except Exception as e:
+        import traceback
+        error_trace = traceback.format_exc()
+        print(f"分析接口异常: {str(e)}")
+        print(f"错误堆栈: {error_trace}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"分析失败: {str(e)}"
+        )
 
 
 @router.get("/{analysis_id}", response_model=AnalysisResult, summary="获取分析结果")

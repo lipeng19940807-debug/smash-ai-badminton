@@ -10,6 +10,7 @@ class UserBase(BaseModel):
     """用户基础模型"""
     username: str = Field(..., min_length=3, max_length=50)
     email: Optional[EmailStr] = None
+    wechat_openid: Optional[str] = None
     nickname: Optional[str] = Field(None, max_length=100)
 
 

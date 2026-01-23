@@ -1,0 +1,108 @@
+<!--pages/login/login.wxml-->
+<view class="page-container">
+  <!-- 顶部导航 -->
+  <view class="top-bar">
+    <view class="back-btn" bindtap="handleBack">
+      <text class="back-icon">←</text>
+    </view>
+    <text class="top-title">SmashAI</text>
+    <view class="top-right"></view>
+  </view>
+
+  <!-- Hero区域 -->
+  <view class="hero-section">
+    <view class="hero-bg">
+      <view class="hero-icon-wrapper">
+        <text class="hero-icon">⚡</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 标题 -->
+  <view class="title-section">
+    <text class="main-title">提升你的扣杀</text>
+    <text class="sub-title">利用 AI 技术追踪羽毛球球速与挥拍技巧</text>
+  </view>
+
+  <!-- 登录/注册切换 -->
+  <view class="auth-tabs">
+    <view class="tab-container">
+      <view class="tab-item {{authMode === 'register' ? 'active' : ''}}" bindtap="switchAuthMode" data-mode="register">
+        <text>注册</text>
+      </view>
+      <view class="tab-item {{authMode === 'login' ? 'active' : ''}}" bindtap="switchAuthMode" data-mode="login">
+        <text>登录</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 表单区域 -->
+  <view class="form-section">
+    <!-- 注册模式：用户昵称 -->
+    <view class="form-item" wx:if="{{authMode === 'register'}}">
+      <text class="form-label">用户昵称</text>
+      <view class="input-wrapper">
+        <input class="form-input" placeholder="起一个响亮的名字" value="{{formData.nickname}}" bindinput="onNicknameInput" />
+        <text class="input-icon">👤</text>
+      </view>
+    </view>
+
+    <!-- 登录模式：用户名 -->
+    <view class="form-item" wx:if="{{authMode === 'login'}}">
+      <text class="form-label">用户名</text>
+      <view class="input-wrapper">
+        <input class="form-input" placeholder="请输入用户名" value="{{formData.username}}" bindinput="onUsernameInput" />
+        <text class="input-icon">👤</text>
+      </view>
+    </view>
+
+    <!-- 注册模式：电子邮箱（可选） -->
+    <view class="form-item" wx:if="{{authMode === 'register'}}">
+      <text class="form-label">电子邮箱 <text class="optional">(可选)</text></text>
+      <view class="input-wrapper">
+        <input class="form-input" type="text" placeholder="example@email.com" value="{{formData.email}}" bindinput="onEmailInput" />
+        <text class="input-icon">✉️</text>
+      </view>
+    </view>
+
+    <!-- 密码 -->
+    <view class="form-item">
+      <text class="form-label">密码</text>
+      <view class="input-wrapper">
+        <input class="form-input" type="text" password="{{!showPassword}}" placeholder="{{authMode === 'register' ? '至少6位密码' : '请输入密码'}}" value="{{formData.password}}" bindinput="onPasswordInput" />
+        <text class="input-icon password-toggle" bindtap="togglePassword">{{showPassword ? '👁️' : '👁️‍🗨️'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="submit-section">
+    <button class="submit-btn" bindtap="handleSubmit">
+      <text>{{authMode === 'register' ? '立即注册' : '立即登录'}}</text>
+      <text class="btn-icon">🏸</text>
+    </button>
+  </view>
+
+  <!-- 微信一键登录（仅在登录模式显示） -->
+  <view class="wechat-login-section" wx:if="{{authMode === 'login'}}">
+    <view class="divider">
+      <view class="divider-line"></view>
+      <text class="divider-text">或</text>
+      <view class="divider-line"></view>
+    </view>
+    <button class="wechat-btn" bindtap="handleWeChatLogin">
+      <text class="wechat-icon">💬</text>
+      <text>微信一键登录</text>
+    </button>
+  </view>
+
+  <!-- 错误提示 -->
+  <view class="error-tip" wx:if="{{loginError}}">
+    <text>{{loginError}}</text>
+  </view>
+
+  <!-- 开发提示 -->
+  <view class="dev-tip">
+    <text class="tip-text">开发提示：\n1. 确保后端服务已启动\n2. 在开发者工具中勾选"不校验合法域名"\n3. 检查 utils/config.js 中的 BASE_URL 是否正确</text>
+  </view>
+</view>

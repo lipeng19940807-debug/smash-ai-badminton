@@ -34,4 +34,14 @@ class UserProfileResponse(BaseModel):
     email: Optional[str] = None
     nickname: Optional[str] = None
     avatar_url: Optional[str] = None
+    points: int = 0
+    total_points_earned: int = 0
+    total_points_spent: int = 0
     created_at: str
+
+
+class WeChatLoginRequest(BaseModel):
+    """微信登录请求模型"""
+    code: str
+    nickname: Optional[str] = None
+    avatar_url: Optional[str] = None

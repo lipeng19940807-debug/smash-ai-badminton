@@ -51,3 +51,10 @@ class VideoUploadResponse(BaseModel):
     file_size: int
     thumbnail_path: Optional[str] = None
     uploaded_at: datetime
+
+
+class CloudVideoUploadRequest(BaseModel):
+    """微信云存储视频同步请求"""
+    file_id: str
+    trim_start: Optional[float] = None
+    trim_end: Optional[float] = None

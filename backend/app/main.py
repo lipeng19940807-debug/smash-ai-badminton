@@ -9,7 +9,7 @@ from fastapi.responses import JSONResponse
 import os
 
 from app.config import settings
-from app.routers import auth, video, analysis, history
+from app.routers import auth, video, analysis, history, admin
 
 
 # 创建 FastAPI 应用
@@ -29,6 +29,8 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
+    max_age=3600,
 )
 
 
@@ -37,6 +39,7 @@ app.include_router(auth.router, prefix="/api")
 app.include_router(video.router, prefix="/api")
 app.include_router(analysis.router, prefix="/api")
 app.include_router(history.router, prefix="/api")
+app.include_router(admin.router, prefix="/api")
 
 
 # 挂载静态文件（上传的视频和缩略图）
@@ -70,11 +73,22 @@ async def health_check():
 @app.exception_handler(Exception)
 async def global_exception_handler(request, exc):
     """全局异常处理器"""
+    import traceback
+    error_detail = str(exc)
+    error_type = type(exc).__name__
+    
+    # 记录详细错误信息到日志
+    import logging
+    logger = logging.getLogger(__name__)
+    logger.error(f"未处理的异常: {error_type}: {error_detail}")
+    logger.error(traceback.format_exc())
+    
+    # 返回用户友好的错误信息
     return JSONResponse(
         status_code=500,
         content={
-            "detail": f"服务器内部错误: {str(exc)}",
-            "type": type(exc).__name__
+            "detail": f"服务器内部错误: {error_detail}",
+            "type": error_type
         }
     )
 

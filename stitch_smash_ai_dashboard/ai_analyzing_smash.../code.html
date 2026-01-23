@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI 正在分析...</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19baf0",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#101d22",
+                    },
+                    fontFamily: {
+                        "display": ["Alibaba PuHuiTi", "Noto Sans SC", "sans-serif"],
+                        "sans": ["Alibaba PuHuiTi", "Noto Sans SC", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            body {
+                font-family: 'Alibaba PuHuiTi', 'Noto Sans SC', sans-serif;
+            }
+        }
+        .skeletal-node {
+            width: 8px;
+            height: 8px;
+            background-color: #19baf0;
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: 0 0 10px #19baf0;
+        }
+        .scanning-line {
+            height: 2px;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, #19baf0, transparent);
+            box-shadow: 0 0 15px #19baf0;
+            position: absolute;
+            top: 60%;
+            z-index: 10;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-white">
+<div class="relative flex h-auto min-h-screen w-full max-w-[430px] mx-auto flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden shadow-2xl">
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between">
+<div class="text-white flex size-12 shrink-0 items-center justify-start cursor-pointer">
+<span class="material-symbols-outlined">close</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-12">AI 正在分析...</h2>
+</div>
+<div class="px-4">
+<div class="flex items-center justify-center gap-2 py-2">
+<div class="size-2 rounded-full bg-primary animate-pulse"></div>
+<h4 class="text-primary text-sm font-bold leading-normal tracking-wide">正在追踪球路</h4>
+</div>
+</div>
+<div class="relative flex items-center justify-center bg-slate-800 bg-cover bg-center aspect-[3/4] mx-4 rounded-xl overflow-hidden border border-white/10" style='background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuCnsKm8dqjJd3o8-ZQrV7YPG5e4_GWEPFLaBAVDFMeH5e0xC_1XykV3d8kqy2Kqg-Ywmqy7KX80WUgQxrpM69RnESeOtW0Ybu1wwGsngKiyNDkqr4DWCZp1xH05YwgUuWH_HkEunqJqX4Ft6N46IUis3VsCHiRfh21odk7l-u3mhpW52P0v5Vtfk5gBBwgWJDSOvI4j-G9HOOvNg38MKd4lKHPEDOHed0y9rBZOD8Y31Jv995N5wNSVz0MP0bF8fU2lzkgUs2WEcMdH");'>
+<div class="scanning-line"></div>
+<svg class="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none" viewBox="0 0 100 100">
+<line stroke="#19baf0" stroke-width="0.5" x1="50" x2="65" y1="30" y2="20"></line>
+<line stroke="#19baf0" stroke-width="0.5" x1="65" x2="75" y1="20" y2="10"></line>
+<line stroke="#19baf0" stroke-width="0.5" x1="50" x2="48" y1="30" y2="60"></line>
+<line stroke="#19baf0" stroke-width="0.5" x1="48" x2="40" y1="60" y2="85"></line>
+<line stroke="#19baf0" stroke-width="0.5" x1="48" x2="55" y1="60" y2="85"></line>
+</svg>
+<div class="skeletal-node" style="top: 30%; left: 50%;"></div>
+<div class="skeletal-node" style="top: 20%; left: 65%;"></div>
+<div class="skeletal-node" style="top: 10%; left: 75%;"></div>
+<div class="skeletal-node" style="top: 60%; left: 48%;"></div>
+<div class="skeletal-node" style="top: 85%; left: 40%;"></div>
+<div class="skeletal-node" style="top: 85%; left: 55%;"></div>
+<div class="absolute bottom-4 left-4 flex flex-col gap-2">
+<div class="bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 flex items-center gap-2 w-fit">
+<span class="material-symbols-outlined text-[14px] text-primary">accessibility_new</span>
+<span class="text-[10px] font-bold tracking-widest uppercase">骨架提取中</span>
+</div>
+<div class="bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 flex items-center gap-2 w-fit">
+<span class="material-symbols-outlined text-[14px] text-primary">graphic_eq</span>
+<span class="text-[10px] font-bold tracking-widest uppercase">声学事件检测</span>
+</div>
+</div>
+<button class="flex shrink-0 items-center justify-center rounded-full size-16 bg-black/40 text-white backdrop-blur-sm border border-white/20">
+<span class="material-symbols-outlined fill-1" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="flex flex-col gap-3 p-6 mt-2">
+<div class="flex gap-6 justify-between items-end">
+<div class="flex flex-col">
+<p class="text-slate-400 text-xs font-bold uppercase tracking-widest">分析状态</p>
+<p class="text-slate-900 dark:text-white text-xl font-bold leading-normal">正在进行 AI 分析...</p>
+</div>
+<div class="flex flex-col items-end">
+<p class="text-primary text-2xl font-black leading-normal">82%</p>
+</div>
+</div>
+<div class="rounded-full bg-slate-200 dark:bg-[#325a67] overflow-hidden">
+<div class="h-2.5 rounded-full bg-primary" style="width: 82%;"></div>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">settings_motion_mode</span>
+<p class="text-slate-500 dark:text-[#91bcca] text-sm font-medium leading-normal italic">正在计算拍头速度...</p>
+</div>
+</div>
+<div class="flex flex-col gap-4 px-6 pb-8">
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<p class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-widest">声学分析</p>
+<div class="px-2 py-0.5 rounded bg-green-500/20 text-green-500 text-[10px] font-bold uppercase">实时同步</div>
+</div>
+<p class="text-slate-900 dark:text-white tracking-tight text-2xl font-bold truncate">检测到击球瞬间</p>
+<div class="flex gap-3">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-[14px]">schedule</span>
+<p class="text-slate-500 dark:text-[#91bcca] text-xs font-medium leading-normal">00:01.82s</p>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-[14px]">verified</span>
+<p class="text-slate-500 dark:text-[#91bcca] text-xs font-medium leading-normal">99.2% 置信度</p>
+</div>
+</div>
+<div class="flex min-h-[140px] flex-col gap-4 py-4">
+<div class="relative h-24 w-full">
+<svg fill="none" height="100%" preserveAspectRatio="none" viewBox="0 0 472 150" width="100%" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V149H0V109Z" fill="url(#paint0_linear_1131_5935)"></path>
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25" stroke="#19baf0" stroke-linecap="round" stroke-width="2"></path>
+<defs>
+<linearGradient gradientUnits="userSpaceOnUse" id="paint0_linear_1131_5935" x1="236" x2="236" y1="1" y2="149">
+<stop stop-color="#19baf0" stop-opacity="0.3"></stop>
+<stop offset="1" stop-color="#19baf0" stop-opacity="0"></stop>
+</linearGradient>
+</defs>
+</svg>
+<div class="absolute top-0 left-[77%] w-[1px] h-full bg-primary/50 border-r border-dashed border-primary"></div>
+</div>
+<div class="flex justify-between px-2">
+<div class="flex flex-col items-center">
+<p class="text-slate-400 dark:text-[#91bcca] text-[10px] font-bold leading-normal uppercase">起跳</p>
+</div>
+<div class="flex flex-col items-center">
+<p class="text-primary text-[10px] font-black leading-normal uppercase bg-primary/10 px-2 py-0.5 rounded">击球</p>
+</div>
+<div class="flex flex-col items-center">
+<p class="text-slate-400 dark:text-[#91bcca] text-[10px] font-bold leading-normal uppercase">着地</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-auto p-6 bg-slate-900/50 backdrop-blur-xl border-t border-white/5">
+<button class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-4 rounded-xl transition-all border border-white/10 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">stop_circle</span>
+                取消分析
+            </button>
+</div>
+<div class="h-8 bg-background-light dark:bg-background-dark"></div>
+</div>
+
+</body></html>

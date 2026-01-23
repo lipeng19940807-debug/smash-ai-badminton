@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>杀球性能报告</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19baf0",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#0a1215",
+                    },
+                    fontFamily: {
+                        "sans": ["Alibaba PuHuiTi", "Noto Sans SC", "system-ui", "sans-serif"],
+                        "display": ["Alibaba PuHuiTi", "Noto Sans SC", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @font-face {
+            font-family: 'Alibaba PuHuiTi';
+            src: url('https://puhui.alicdn.com/AlibabaPuHuiTi-3-55-Regular.woff2') format('woff2');
+        }
+        body {
+            min-height: 100dvh;
+            font-family: 'Alibaba PuHuiTi', 'Noto Sans SC', sans-serif;
+            @apply bg-background-dark;
+        }
+        .speed-text {
+            text-shadow: 0 0 30px rgba(25, 186, 240, 0.5);
+        }
+        .chart-container {
+            border: 2px solid #19baf0;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-white selection:bg-primary/30">
+<div class="relative flex min-h-screen w-full flex-col max-w-md mx-auto">
+<header class="flex items-center p-4 justify-between sticky top-0 z-30 bg-background-dark/80 backdrop-blur-md">
+<div class="text-primary flex size-12 shrink-0 items-center">
+<span class="material-symbols-outlined cursor-pointer text-2xl">arrow_back_ios</span>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight flex-1 text-center">杀球性能报告</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex size-10 items-center justify-center rounded-full text-primary">
+<span class="material-symbols-outlined">info</span>
+</button>
+</div>
+</header>
+<main class="flex-1 px-4 pb-48">
+<section class="flex flex-col items-center justify-center pt-6 pb-8">
+<p class="text-primary text-sm font-bold tracking-widest mb-2">杀球速度</p>
+<div class="flex items-baseline relative">
+<h1 class="text-white tracking-tighter text-8xl font-black italic speed-text">285</h1>
+<span class="text-2xl ml-2 font-bold text-white/90">km/h</span>
+</div>
+<div class="mt-6 flex items-center gap-2 px-6 py-2 bg-primary/10 rounded-full border border-primary/20">
+<span class="material-symbols-outlined text-primary text-sm">trending_up</span>
+<span class="text-primary text-xs font-bold">刷新个人最佳记录</span>
+</div>
+</section>
+<section class="mb-6">
+<div class="bg-slate-900/40 rounded-3xl p-6 border border-slate-800/60">
+<div class="chart-container border-primary/50">
+<h3 class="text-white text-lg font-bold mb-8">技术雷达图</h3>
+<div class="flex justify-around items-end h-32 w-full px-4 mb-2">
+<div class="flex flex-col items-center flex-1">
+<span class="text-primary font-bold mb-1 text-sm">92</span>
+<div class="w-10 bg-primary/20 rounded-t-sm relative overflow-hidden" style="height: 92%;">
+<div class="absolute inset-0 bg-primary/80 border-t border-primary"></div>
+</div>
+<p class="text-primary/70 text-xs font-bold mt-3">发力</p>
+</div>
+<div class="flex flex-col items-center flex-1">
+<span class="text-primary font-bold mb-1 text-sm">78</span>
+<div class="w-10 bg-primary/20 rounded-t-sm relative overflow-hidden" style="height: 78%;">
+<div class="absolute inset-0 bg-primary/60 border-t border-primary/70"></div>
+</div>
+<p class="text-primary/70 text-xs font-bold mt-3">角度</p>
+</div>
+<div class="flex flex-col items-center flex-1">
+<span class="text-primary font-bold mb-1 text-sm">85</span>
+<div class="w-10 bg-primary/20 rounded-t-sm relative overflow-hidden" style="height: 85%;">
+<div class="absolute inset-0 bg-primary/70 border-t border-primary/90"></div>
+</div>
+<p class="text-primary/70 text-xs font-bold mt-3">协调性</p>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4">
+<span class="text-slate-400 text-sm font-medium">动作评分：</span>
+<div class="flex items-baseline gap-2">
+<span class="text-primary text-4xl font-black italic">9.2</span>
+<span class="text-primary/60 text-xs font-bold">优异 (Top 12%)</span>
+</div>
+</div>
+</div>
+</section>
+<section class="mb-6">
+<h3 class="text-white text-lg font-bold px-1 mb-4">专业建议</h3>
+<div class="relative overflow-hidden bg-slate-900/40 border border-slate-800/60 rounded-3xl p-5">
+<div class="flex gap-4 relative z-10">
+<div class="flex flex-col gap-6 flex-1">
+<div class="flex items-start gap-3">
+<div class="bg-primary/20 p-2 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm font-bold">bolt</span>
+</div>
+<div>
+<p class="text-white text-sm font-bold">手臂延伸</p>
+<p class="text-slate-400 text-xs mt-1.5 leading-relaxed">在击球点增加 <span class="text-primary font-bold">15°</span> 的延伸，以获得最大爆发力。</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="bg-primary/20 p-2 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm font-bold">keyboard_command_key</span>
+</div>
+<div>
+<p class="text-white text-sm font-bold">核心转动</p>
+<p class="text-slate-400 text-xs mt-1.5 leading-relaxed">核心部位需提前 0.2s 介入，与肩部转动同步以增强稳定性。</p>
+</div>
+</div>
+</div>
+<div class="w-24 h-32 flex-shrink-0 relative overflow-hidden rounded-xl bg-slate-950 border border-slate-800">
+<img alt="AI 分析" class="w-full h-full object-cover opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtmFRen954ALCkYN1xe1wQ0zUs5MVgp_4q2mttdAMvP6w-7JSo3XRT5YbZHXX-u6UJ1qvYC3ylQx6qQw1awYdMixCnCSFu4eFgH6WwmLb8PFnmlOosc8eir0j5-0cE4LqqVbj_14ZLefoKYVo_arageZw_D8pk1unzacXYxFQPnnfyn9JwaMr1RhC4tB4REcJBwHkppx_pLra4GOIFka2O4s64COt5ceC-nrjY1PAtvQSHxsJlC2NZZzsa11N2R_rDDsNmpShTIddQ"/>
+</div>
+</div>
+</div>
+</section>
+<section class="mb-6">
+<div class="bg-slate-900/40 rounded-3xl p-5 flex items-center justify-between border border-slate-800/60">
+<div class="flex items-center gap-4">
+<div class="size-11 rounded-full bg-yellow-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-yellow-500 text-2xl">trophy</span>
+</div>
+<div>
+<p class="text-white text-sm font-bold">全球排名</p>
+<p class="text-slate-500 text-xs mt-0.5">业余联赛 (Lvl 5)</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-primary text-2xl font-black italic">前 5%</p>
+<p class="text-slate-500 text-[10px] uppercase font-bold tracking-wider mt-0.5">地区: 亚洲</p>
+</div>
+</div>
+</section>
+</main>
+<footer class="fixed bottom-0 left-0 right-0 bg-background-dark/95 backdrop-blur-2xl p-6 pb-10 z-40 max-w-md mx-auto">
+<div class="space-y-6">
+<button class="w-full bg-primary text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-3 shadow-[0_4px_20px_rgba(25,186,240,0.3)] transition-transform active:scale-[0.98]">
+<span class="material-symbols-outlined font-bold">share</span>
+<span class="text-lg">分享战报</span>
+</button>
+<div class="flex items-center justify-between px-2">
+<p class="text-slate-400 text-xs font-medium">快速分享到</p>
+<div class="flex gap-4">
+<button class="size-11 rounded-full bg-slate-800/80 flex items-center justify-center border border-slate-700/50">
+<span class="material-symbols-outlined text-white/90 text-xl">chat</span>
+</button>
+<button class="size-11 rounded-full bg-slate-800/80 flex items-center justify-center border border-slate-700/50">
+<span class="material-symbols-outlined text-white/90 text-xl">movie</span>
+</button>
+<button class="size-11 rounded-full bg-slate-800/80 flex items-center justify-center border border-slate-700/50">
+<span class="material-symbols-outlined text-white/90 text-xl">download</span>
+</button>
+</div>
+</div>
+</div>
+</footer>
+</div>
+
+</body></html>

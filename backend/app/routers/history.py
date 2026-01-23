@@ -79,13 +79,35 @@ async def get_history(
         video_info = record.get("videos", {}) if isinstance(record.get("videos"), dict) else {}
         thumbnail_path = video_info.get("thumbnail_path") if video_info else None
         
+        # 转换缩略图路径为 URL
+        thumbnail_url = None
+        if thumbnail_path:
+            # 将本地路径转换为可访问的 URL
+            if thumbnail_path.startswith("./"):
+                thumbnail_path = thumbnail_path[2:]
+            elif not thumbnail_path.startswith("/"):
+                thumbnail_path = "/" + thumbnail_path
+            # 确保路径以 /uploads 开头
+            if thumbnail_path.startswith("/uploads/"):
+                thumbnail_url = thumbnail_path
+            else:
+                # 从完整路径中提取相对路径
+                if "thumbnails" in thumbnail_path:
+                    parts = thumbnail_path.split("thumbnails")
+                    if len(parts) > 1:
+                        thumbnail_url = f"/uploads/thumbnails{parts[1]}"
+                    else:
+                        thumbnail_url = thumbnail_path
+                else:
+                    thumbnail_url = f"/uploads/{thumbnail_path}"
+        
         items.append({
             "id": record["id"],
             "video_id": record["video_id"],
             "speed": record["speed"],
             "score": record["score"],
             "level": record["level"],
-            "thumbnail_url": thumbnail_path,
+            "thumbnail_url": thumbnail_url,
             "analyzed_at": record["analyzed_at"]
         })
     

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19baf0",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#101d22",
+                    },
+                    fontFamily: {
+                        "display": ["Be Vietnam Pro", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .report-card-gradient {
+            background: linear-gradient(145deg, #192d34 0%, #111e22 100%);
+            border: 1px solid rgba(25, 186, 240, 0.2);
+        }
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(16, 29, 34, 0.8);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white antialiased">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- TopAppBar -->
+<div class="flex items-center bg-transparent p-4 pb-2 justify-between z-10">
+<div class="text-white flex size-12 shrink-0 items-center justify-start">
+<span class="material-symbols-outlined cursor-pointer">close</span>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">分享战报</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-transparent text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+</div>
+<!-- Main Content Area (Scrollable if needed, but designed for mobile view) -->
+<main class="flex-1 flex flex-col items-center justify-center p-4">
+<!-- Shareable War Report Card -->
+<div class="report-card-gradient w-full max-w-sm rounded-xl overflow-hidden shadow-2xl relative">
+<!-- Card Header Image -->
+<div class="relative h-48 w-full">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Badminton smash action in dark court" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCMmryFURWmPoJtgyTjGtjMMjXLmHefQkRcTgy0b67txsERK7sc5Ew7Cl_a-qbBhS91PWZpOw2AnfJUihzHIb9ZGEtKD7BTUZvtDBpWsJoRJTD2YNiEGSDhkpieMp1lXQJD4XkDmlm3ZBmb43PWc1O57xJVQw4-UZpUxg6TkMbqKAO6FQTw_STTqk8ulFxJy6b_TSjV58Na-8S7wskg3w-ufGyQwfOeT7Xvl3crOZ8LIc1bqZo8ZzvmMFSeIN6Zwy52p6NE9FgBn2UD')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#111e22] to-transparent"></div>
+<div class="absolute top-4 left-4 flex items-center gap-2">
+<div class="bg-primary px-3 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-xs !text-[#101d22] font-bold">bolt</span>
+<span class="text-xs font-bold text-[#101d22] uppercase tracking-wider italic">AI Smash Analysis</span>
+</div>
+</div>
+</div>
+<!-- Card Body -->
+<div class="p-6 pt-2 flex flex-col items-center text-center">
+<p class="text-primary/80 text-sm font-medium tracking-[0.2em] mb-1">SMASH WAR REPORT</p>
+<h1 class="text-5xl font-bold text-white mb-2 italic">328 <span class="text-xl not-italic font-normal text-primary/60">km/h</span></h1>
+<div class="flex gap-6 my-4 w-full justify-center">
+<div class="flex flex-col">
+<span class="text-primary font-bold text-lg">#12</span>
+<span class="text-[#91bcca] text-[10px] uppercase">城市排名</span>
+</div>
+<div class="h-8 w-[1px] bg-white/10 self-center"></div>
+<div class="flex flex-col">
+<span class="text-white font-bold text-lg">98%</span>
+<span class="text-[#91bcca] text-[10px] uppercase">超越球友</span>
+</div>
+<div class="h-8 w-[1px] bg-white/10 self-center"></div>
+<div class="flex flex-col">
+<span class="text-white font-bold text-lg">S+</span>
+<span class="text-[#91bcca] text-[10px] uppercase">爆发等级</span>
+</div>
+</div>
+<div class="w-full bg-white/5 rounded-lg p-3 flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full border-2 border-primary overflow-hidden">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="Stylized user profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJNaV7znkbO4ihDB5KaJCJlWoN4MSGYGOX6cmlLUPDy5MzL86dnXDAdduaQcgjEQ7iPzrfSCBE0MwnkI7ZPyqdUBAkzsdocjzi9VFVvIA4aVtBOkEAdU8ljUWnPMrmVohOp-5I8yLUKHaLJwbuHCbL69oo8zPzUbea7Qep97-ACYPsJqhkT-xK9_jD94NzvX2IDrd6DDqYtfPUoLsqHB1VlZxFcVnFL1Ca8eKgxIn2az5uu53hB1ESEFR2viiLq5NZYsbKujgWJpia"/>
+</div>
+<div class="text-left">
+<p class="text-white text-sm font-bold">李小明</p>
+<p class="text-[#91bcca] text-xs">2023年10月24日 · 上海</p>
+</div>
+</div>
+<div class="bg-white p-1 rounded-sm">
+<div class="size-10 bg-white flex items-center justify-center">
+<!-- Minimalist placeholder for QR code -->
+<span class="material-symbols-outlined text-[#111e22] !text-4xl">qr_code_2</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- MetaText -->
+<div class="mt-8 mb-4">
+<p class="text-[#91bcca] text-sm font-normal leading-normal text-center">分享荣耀时刻至</p>
+</div>
+<!-- ActionsBar -->
+<div class="w-full @container">
+<div class="gap-2 px-4 grid grid-cols-4 max-w-md mx-auto">
+<!-- WeChat -->
+<div class="flex flex-col items-center gap-2 py-2.5 text-center cursor-pointer group">
+<div class="rounded-full bg-white/5 group-hover:bg-white/10 p-4 transition-colors">
+<span class="material-symbols-outlined text-white">chat</span>
+</div>
+<p class="text-white text-xs font-medium">微信</p>
+</div>
+<!-- Moments -->
+<div class="flex flex-col items-center gap-2 py-2.5 text-center cursor-pointer group">
+<div class="rounded-full bg-white/5 group-hover:bg-white/10 p-4 transition-colors">
+<span class="material-symbols-outlined text-white">camera_indoor</span>
+</div>
+<p class="text-white text-xs font-medium">朋友圈</p>
+</div>
+<!-- Douyin -->
+<div class="flex flex-col items-center gap-2 py-2.5 text-center cursor-pointer group">
+<div class="rounded-full bg-white/5 group-hover:bg-white/10 p-4 transition-colors">
+<span class="material-symbols-outlined text-white">music_video</span>
+</div>
+<p class="text-white text-xs font-medium">抖音</p>
+</div>
+<!-- XHS -->
+<div class="flex flex-col items-center gap-2 py-2.5 text-center cursor-pointer group">
+<div class="rounded-full bg-white/5 group-hover:bg-white/10 p-4 transition-colors">
+<span class="material-symbols-outlined text-white">book</span>
+</div>
+<p class="text-white text-xs font-medium">小红书</p>
+</div>
+</div>
+</div>
+<!-- SingleButton -->
+<div class="w-full flex px-4 py-8 justify-center">
+<button class="flex min-w-[200px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-14 px-8 bg-primary/20 hover:bg-primary/30 text-primary border border-primary/50 gap-2 transition-all">
+<span class="material-symbols-outlined">download</span>
+<span class="truncate font-bold tracking-wide">保存图片</span>
+</button>
+</div>
+</main>
+<!-- Spacer for iOS home indicator -->
+<div class="h-8 bg-transparent"></div>
+</div>
+</body></html>

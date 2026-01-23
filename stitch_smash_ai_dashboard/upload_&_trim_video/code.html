@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>上传与剪辑视频</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19baf0",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#101d22",
+                    },
+                    fontFamily: {
+                        "display": ["Alibaba PuHuiTi", "Noto Sans SC", "PingFang SC", "system-ui", "sans-serif"],
+                        "sans": ["Alibaba PuHuiTi", "Noto Sans SC", "PingFang SC", "system-ui", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: "Alibaba PuHuiTi", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .trimmer-window {
+            border: 2px solid #19baf0;
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.6);
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-white min-h-screen flex flex-col max-w-[480px] mx-auto overflow-x-hidden">
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 justify-between sticky top-0 z-50 border-b border-white/10">
+<div class="text-white flex size-10 shrink-0 items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined">arrow_back_ios</span>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center">上传与剪辑视频</h2>
+<div class="flex w-10 items-center justify-end">
+<button class="flex items-center justify-center rounded-lg h-10 bg-transparent text-white p-0">
+<span class="material-symbols-outlined">info</span>
+</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto pb-32">
+<div class="px-4 pt-6 pb-2">
+<h3 class="text-white tracking-light text-2xl font-bold leading-tight">捕捉你的扣杀瞬间</h3>
+<p class="text-white/60 text-sm mt-1">为了获得最佳 AI 分析效果，请选择一段 5 秒内的清晰片段。</p>
+</div>
+<div class="grid grid-cols-2 gap-3 p-4">
+<div class="flex flex-col gap-3 pb-3">
+<div class="w-full bg-primary/10 border-2 border-primary/20 flex flex-col items-center justify-center aspect-square rounded-xl cursor-pointer hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary text-4xl mb-2">videocam</span>
+<p class="text-white text-sm font-medium">拍摄视频</p>
+</div>
+</div>
+<div class="flex flex-col gap-3 pb-3">
+<div class="w-full bg-white/5 border-2 border-white/10 flex flex-col items-center justify-center aspect-square rounded-xl cursor-pointer hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-white text-4xl mb-2">photo_library</span>
+<p class="text-white text-sm font-medium">上传视频</p>
+</div>
+</div>
+</div>
+<div class="px-4">
+<div class="relative flex items-center justify-center bg-zinc-900 aspect-video rounded-xl overflow-hidden border border-white/10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBhEgNHHhjRbENKwGTGUNw-OhIiPEddh6jrlxrnwwiBVSFK1IPp20TKj36hwveqg_745Gbg6AnL1XoemWiTrsGQ2sV4e5V2B3FIxKklxJT-OhSYQIrEjqOARkrvpWlqv7Uz6SMfSjoDwOaN77q35sk1W7wYxlS7MbL6ugLiQtIf2CwNiAzWzXMgUnC3c2AIkSuEPsoRdIZ6scJR_5Yp1kt5Xh-Xh6F0nkQHxKb8PlRv4j3NjhOyqyNb-YCTAqaxsBsZ-ByivYFRUmNP"); background-size: cover;'>
+<div class="absolute inset-0 bg-black/40"></div>
+<button class="relative z-10 flex shrink-0 items-center justify-center rounded-full size-16 bg-black/60 text-white backdrop-blur-sm">
+<span class="material-symbols-outlined fill-1" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+<div class="absolute top-3 right-3 bg-black/60 px-2 py-1 rounded text-[10px] font-bold tracking-widest uppercase">
+                原始长度: 0:12
+            </div>
+</div>
+</div>
+<div class="mt-6">
+<div class="flex items-center justify-between px-4 pb-2">
+<h3 class="text-white text-lg font-bold leading-tight tracking-tight">剪辑 5秒片段</h3>
+<span class="text-primary text-sm font-bold bg-primary/20 px-2 py-0.5 rounded-full">已选择 0:05</span>
+</div>
+<div class="p-4 pt-2">
+<div class="relative h-20 w-full bg-zinc-800 rounded-lg overflow-hidden border border-white/5">
+<div class="absolute inset-0 flex">
+<div class="h-full w-1/5 border-r border-white/10 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB6L9Oxrz-vqLXmByrRUuSBTKproszPQa5U2l0X-6UtCxGRCBffYacDMtiRaYL52dSskhF6n2VDaStpP4MgqWF7WbBgZwuRTZcR5mO2ShOywMt4GeVYgZYYt2VAThCo7I-EP8abznfiUxrc8XUE6MpuV6KbfcHsM78gRlAMM-RZrILfBzOzC2bCXou4t1UmBHixEkZGhat8U1p9IdSycREX5ncV12OcY6dQkLy1r8AYPMN3ly4ihr6im-yAIThlPpu2dkyXpmB9qMUo')"></div>
+<div class="h-full w-1/5 border-r border-white/10 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBxSFBR2La-a460iDZnAjM43TGeff4rQVz1jLdmiIb4sidAQsH1f-EikcXfsvmKNHQ7ov_zYeOFoq-fHoj-dK_GLp7ELEV3c8c_6cRcTD0e8wUmK4Q2bsZcUBkSw4T9LEh7TbQJjRwwhW165fqaKup5qCM1MU4Jv36VB88nE86KMT5HA0jmI3UnV1KLgt1OypUL6zh8pxZQ0GNayBLVdk1blhI-RBQcB7Tb_JLAlGeaG9_ahOi1WE9bdMgUQuTzYOLbonELjemKpJ3E')"></div>
+<div class="h-full w-1/5 border-r border-white/10 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAJwrdbLjsj4QLD72xTti8Ljnbx_GhW-neIGtBUR9S31B_0dzFNUR1BBeEKCCtSgvYPvLVUoZ3dGdUMkzRHb_yVKj8MNHp8nBbC5XEuDjIIlUVmjquIUGJgFQf1v5O4rKSz_qGBVn1DM5_H-i3pMKh0bqnN_wQ6_qub9Qa4Yre4nbaJfpHToGbhO00kd7rDi1jKLWT6IWrclHHSiKqaZ26d7nscZPbOPbsi2oBweYwd4f4SgzrpuD9_Hc9eT3xTryzj_1dsfcTIA0I0')"></div>
+<div class="h-full w-1/5 border-r border-white/10 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA96qENMqSh0LGJzKNbS60efmSRKW6G4eUfD-Nh2KUcfI150bgdbu3LHqbkhA98yJEHc8mJEiYlMX6PFulr9K-ORJ2bezRI294uJfUlQEXb2A1SDxqlSpeqSvPUPxAuxvJbE3JXTRJTrHTPSZGiHsCa2T2UN3SRSmVjhBwn3JC4jGndefkoPW_1abAngsep-1CioyMIzqH6q9929AlshR4JVxPGu5aL-t35_PFdE21KL-D51I0cQHjddTB1wMsPsAENKXeHhupq7uy8')"></div>
+<div class="h-full w-1/5 border-r border-white/10 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDprJUJqTFDLGhO4A1xjjzJaJNUsdq_eCnJj-aR6apWLgZSOgNG00dRPwYrdiQpf751-qpNEAJXkkR9qzHmA_Mxad2HDSeDUOyOPNtOCN9NmETQC_fyA0yatI0y2HCfvuYsoN0kSeP5EmVvn-3BntNWs5103ovSrcg_CrLtjR_svtFR0CZ-F9_6-IxqE-wSJPN2dXKZYGs_i6Mf4dFHGky0SUosB7bwXfTyAyyFbzYELQRdZ0MR3haZXt98phFDNCuqXLnxdnsLrDNC')"></div>
+</div>
+<div class="absolute left-1/4 top-0 w-1/2 h-full z-20 trimmer-window flex justify-between items-center pointer-events-none">
+<div class="h-full w-1.5 bg-primary pointer-events-auto cursor-col-resize flex items-center justify-center">
+<div class="w-0.5 h-6 bg-white/50 rounded-full"></div>
+</div>
+<div class="h-full w-1.5 bg-primary pointer-events-auto cursor-col-resize flex items-center justify-center">
+<div class="w-0.5 h-6 bg-white/50 rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="flex justify-between mt-2 px-1">
+<p class="text-white/40 text-xs font-medium">0:00</p>
+<p class="text-primary text-xs font-bold">限制 5 秒内</p>
+<p class="text-white/40 text-xs font-medium">0:12</p>
+</div>
+</div>
+</div>
+<div class="px-4 py-2 mt-2">
+<div class="bg-zinc-900/50 rounded-xl p-4 border border-white/5">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">cloud_upload</span>
+<span class="text-white text-sm font-medium">正在准备视频...</span>
+</div>
+<span class="text-primary text-xs font-bold">85%</span>
+</div>
+<div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full w-[85%]"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background-dark via-background-dark to-transparent pt-8 max-w-[480px] mx-auto z-50">
+<button class="w-full bg-primary text-background-dark font-bold text-lg h-14 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-primary/20 active:scale-95 transition-transform">
+<span class="material-symbols-outlined fill-1" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+        开始 AI 分析
+    </button>
+<div class="h-6"></div>
+</div>
+
+</body></html>

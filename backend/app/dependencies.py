@@ -2,7 +2,7 @@
 依赖注入函数
 """
 from typing import Optional
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status, Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from supabase import Client
 from app.database import get_db
@@ -11,18 +11,52 @@ from app.models.user import User
 
 
 # HTTP Bearer Token 认证方案
-security = HTTPBearer()
+security = HTTPBearer(auto_error=False)
 
 
 async def get_current_user(
-    credentials: HTTPAuthorizationCredentials = Depends(security),
+    request: Request,
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security),
     db: Client = Depends(get_db)
 ) -> dict:
     """
     获取当前登录用户
     
-    从 Authorization Header 中提取 JWT Token，验证并返回用户信息
+    支持两种认证方式：
+    1. 微信云托管自动注入的 X-WX-OPENID (优先级高)
+    2. 标准 JWT Token (Authorization Header)
     """
+    # 1. 尝试从微信云托管请求头获取 OpenID
+    openid = request.headers.get("X-WX-OPENID")
+    if openid:
+        # 如果有 OpenID，说明是云托管环境，直接根据 OpenID 查询或创建用户
+        try:
+            # 在云托管环境下，id 可能就是 openid 或者关联 openid
+            response = db.table("users").select("*").eq("username", openid).execute()
+            if response.data:
+                return response.data[0]
+            else:
+                # 如果用户不存在，可以自动创建一个基础用户
+                new_user = {
+                    "username": openid,
+                    "nickname": "微信用户",
+                    "email": f"{openid[:10]}@wechat.com"
+                }
+                insert_res = db.table("users").insert(new_user).execute()
+                if insert_res.data:
+                    return insert_res.data[0]
+        except Exception as e:
+            print(f"云托管 OpenID 认证失败: {str(e)}")
+            # 继续尝试 JWT 认证
+
+    # 2. 尝试 JWT Token 认证
+    if not credentials:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="未提供认证凭据",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+        
     token = credentials.credentials
     
     # 解码 Token

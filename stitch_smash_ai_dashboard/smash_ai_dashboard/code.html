@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>杀球 AI 仪表盘</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19baf0",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#0a1216",
+                    },
+                    fontFamily: {
+                        "sans": ["Alibaba PuHuiTi", "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "sans-serif"],
+                        "display": ["Alibaba PuHuiTi", "Noto Sans SC", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @font-face {
+            font-family: 'Alibaba PuHuiTi';
+            src: local('Alibaba PuHuiTi');}
+        body {
+            font-family: 'Alibaba PuHuiTi', 'Noto Sans SC', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(25, 186, 240, 0.4);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #19baf0 0%, #70e1ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen">
+<div class="sticky top-0 z-50 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 pb-2 justify-between border-b border-slate-200 dark:border-slate-800/50">
+<div class="flex items-center gap-3">
+<div class="flex size-10 shrink-0 items-center overflow-hidden rounded-full border-2 border-primary">
+<div class="bg-center bg-no-repeat aspect-square bg-cover size-full" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDvhR5OpWHMhPEIU8BrF44ZKAdNIpKgP1sjdfsv67TC96WqFRTPqETFoDCTbeUAtVZO8ASEUzW2V81nwZVqABXQu9bHpTBZSUaPuT0rX7IecY8BP-qHSEuqDsiJ4CJ2CH1i8-_j9xMdlB1MJba78Aw6sHJghdeC01UKye-39DQmu0kcZrdkvCDHimwwpRsXNi7btCPyjhyLih10Q8y2T3BuiO0YZHg110pO6hI9y4_nhrK046RwNpXIjznEKGdAvU0UJiQVeAX2MeMZ");'></div>
+</div>
+<div>
+<p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">欢迎回来</p>
+<h2 class="text-slate-900 dark:text-white text-base font-bold leading-tight">陈一鸣 (Alex)</h2>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex size-10 cursor-pointer items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-white">
+<span class="material-symbols-outlined text-[24px]">notifications</span>
+</button>
+<button class="flex size-10 cursor-pointer items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-white">
+<span class="material-symbols-outlined text-[24px]">settings</span>
+</button>
+</div>
+</div>
+<div class="p-4">
+<div class="bg-cover bg-center flex flex-col items-stretch justify-end rounded-2xl pt-[120px] shadow-2xl overflow-hidden relative group" style='background-image: linear-gradient(0deg, rgba(10, 18, 22, 0.98) 0%, rgba(10, 18, 22, 0.3) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDaq4ydYnwmn-wUgoqjzr2qjsNVgx-qy3aKjCj5G30OjOXflbZhZEujpZa0XlYEjBAOTqT6Nv93UiYcitaJrVp3UQwr-Sxm0yroGpmAeCzyPxiZ4cgbJ_Uxw5ctSxjBEUYv_dKMjNm2ET3XFbw3o3w45S8uOR8kUyVCtPwFHVZ6rdFGSfjQ0JwBcZzWoPmk60luteD8q_cNVwFYwQOnkaXweAXmDYyFMQVQukUaU5uIKbjRCihbKyh4Pr2ZK8SDqegYcqavSeJqzGRW");'>
+<div class="absolute top-4 right-4 bg-primary/20 backdrop-blur-md border border-primary/30 rounded-full px-3 py-1">
+<p class="text-primary text-[10px] font-black uppercase tracking-[0.1em]">精英级选手</p>
+</div>
+<div class="flex w-full items-end justify-between gap-4 p-6">
+<div class="flex flex-1 flex-col">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-slate-400 text-sm font-medium">全国排名:</span>
+<span class="text-primary font-bold text-sm">第 452 名</span>
+</div>
+<div class="flex items-baseline gap-1">
+<p class="text-white tracking-tighter text-5xl font-black leading-tight">392</p>
+<p class="text-xl font-bold text-slate-400">km/h</p>
+</div>
+<p class="text-slate-300 text-sm font-medium tracking-wide">个人最佳杀球时速</p>
+</div>
+<button class="flex min-w-[90px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-white/10 backdrop-blur-md border border-white/10 text-white text-xs font-bold hover:bg-white/20 transition-all">
+<span class="truncate">详细数据</span>
+</button>
+</div>
+</div>
+</div>
+<div class="px-4 py-2">
+<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl h-16 px-5 bg-primary text-background-dark gap-3 text-lg font-black tracking-wide neon-glow active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[30px]">videocam</span>
+<span>开始分析杀球</span>
+</button>
+</div>
+<div class="px-4 py-4">
+<div class="bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800/60 rounded-2xl p-4 flex items-center gap-4">
+<div class="size-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0 border border-primary/20">
+<span class="material-symbols-outlined text-primary text-[28px]">psychology</span>
+</div>
+<div>
+<p class="text-[10px] font-black text-primary uppercase tracking-widest mb-0.5">AI 智能建议</p>
+<p class="text-sm text-slate-600 dark:text-slate-300 leading-snug">你在上一场训练中的手腕爆发力提升了 <span class="text-primary font-bold">12%</span>。请继续保持这个挥拍节奏！</p>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between px-5 pt-4">
+<h2 class="text-slate-900 dark:text-white text-xl font-black leading-tight tracking-tight">最近记录</h2>
+<button class="text-primary text-sm font-bold flex items-center gap-0.5">查看全部 <span class="material-symbols-outlined text-sm">chevron_right</span></button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
+<div class="flex flex-col gap-3 pb-3 bg-white dark:bg-slate-900/40 rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800/50 p-2.5">
+<div class="relative w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl overflow-hidden group" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA-1jQlGjaxUpLrc6gvjrsnfjRQJVNuNJXjm42MAWHl3j8W7ByFqKbvGp4hxh3PnhvsQWrpCeKSyTUNhsvT7A_hus__oVfsKylwhTQnSIQI65dt08oqMJTqQ9StF1a2Q_AekNc62qsdy_pebWLXTrFE33b_60QITqiZ7cjXj7EFkaHv7by4kltT2-xPCneUvrhLIq5c9c4YLg08gP2Nk5KfoRfRP7JZERGxMPltUEhC1QM4VN_pBYa_-lwk8rUrMrOSZuWd0MZkRJCb");'>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
+<div class="absolute bottom-2 left-2 bg-black/70 backdrop-blur-md rounded-lg px-2.5 py-1 text-[11px] text-white font-black flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">bolt</span> 380 km/h
+                </div>
+</div>
+<div class="px-1.5 pb-1">
+<div class="flex justify-between items-start mb-1.5">
+<p class="text-slate-900 dark:text-white text-base font-bold">早间专项练习</p>
+<span class="text-[10px] px-2 py-0.5 rounded-full bg-green-500/10 text-green-500 border border-green-500/20 font-black uppercase tracking-tighter">表现提升</span>
+</div>
+<div class="flex items-center justify-between">
+<p class="text-slate-500 dark:text-slate-400 text-[11px] font-medium">2023年10月24日</p>
+<p class="text-slate-500 dark:text-slate-400 text-[11px] font-medium">42 次杀球</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-3 pb-3 bg-white dark:bg-slate-900/40 rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800/50 p-2.5">
+<div class="relative w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl overflow-hidden group" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBdVeISZ9mc68vSZGi1u6BGA3ZF6mhBPzWeXH9HHY67XpT_CPcyQo9YKmTNeOaIDKMwbkHrRnyTzGVJ07x8_rOBt1scB6RG2ODyTnkPApH0i7-ER7jKGgXBqVSr7jasv3do2KOpbPQ2k7ajUqfxNFXSV7jq5eWphOxex1NaikZQBvs10vuZ3r0Ygv9CV-qYEiMocrotq3dRrIPjTG4mQ0cPJkZPBstaDyiRdkBqS8dllluV6TEIyc4AJIpK-GtLO6SDL5aH1xG9cLEM");'>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
+<div class="absolute bottom-2 left-2 bg-black/70 backdrop-blur-md rounded-lg px-2.5 py-1 text-[11px] text-white font-black flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">bolt</span> 365 km/h
+                </div>
+</div>
+<div class="px-1.5 pb-1">
+<div class="flex justify-between items-start mb-1.5">
+<p class="text-slate-900 dark:text-white text-base font-bold">训练建议</p>
+<span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-500/10 text-slate-500 border border-slate-500/20 font-black uppercase tracking-tighter">发挥稳定</span>
+</div>
+<div class="flex items-center justify-between">
+<p class="text-slate-500 dark:text-slate-400 text-[11px] font-medium">2023年10月22日</p>
+<p class="text-slate-500 dark:text-slate-400 text-[11px] font-medium">18 次杀球</p>
+</div>
+</div>
+</div>
+</div>
+<div class="h-28"></div>
+<div class="fixed bottom-0 left-0 right-0 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-2xl border-t border-slate-200 dark:border-slate-800/60 px-8 py-3 pb-9 flex justify-between items-center z-50">
+<div class="flex flex-col items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[28px] font-variation-fill">home</span>
+<span class="text-[10px] font-black">首页</span>
+</div>
+<div class="flex flex-col items-center gap-1.5 text-slate-400">
+<span class="material-symbols-outlined text-[28px]">history</span>
+<span class="text-[10px] font-black">训练记录</span>
+</div>
+<div class="flex flex-col items-center gap-1.5 text-slate-400">
+<span class="material-symbols-outlined text-[28px]">leaderboard</span>
+<span class="text-[10px] font-black">排行榜</span>
+</div>
+<div class="flex flex-col items-center gap-1.5 text-slate-400">
+<span class="material-symbols-outlined text-[28px]">person</span>
+<span class="text-[10px] font-black">个人中心</span>
+</div>
+</div>
+
+</body></html>

@@ -1,0 +1,147 @@
+<!--pages/report/report.wxml-->
+<view class="page-container">
+  <!-- 顶部导航栏 -->
+  <view class="header">
+    <view class="header-content">
+      <view class="back-btn" bindtap="handleBack">
+        <text class="back-icon">←</text>
+      </view>
+      <text class="header-title">杀球性能报告</text>
+      <view class="header-right">
+        <text class="info-icon">ℹ️</text>
+      </view>
+    </view>
+  </view>
+
+  <scroll-view class="content" scroll-y wx:if="{{!loading && result}}">
+    <!-- 速度展示区域 -->
+    <view class="speed-section">
+      <text class="speed-label">杀球速度</text>
+      <view class="speed-display">
+        <text class="speed-number">{{result.speed}}</text>
+        <text class="speed-unit">km/h</text>
+      </view>
+      <view class="speed-badge">
+        <text class="badge-icon">📈</text>
+        <text class="badge-text">刷新个人最佳记录</text>
+      </view>
+    </view>
+
+    <!-- 技术雷达图 -->
+    <view class="technique-section">
+      <view class="section-card">
+        <view class="chart-container">
+          <view class="section-header">
+            <text class="section-icon">📊</text>
+            <text class="section-title">技术雷达图</text>
+          </view>
+          
+          <!-- 柱状图 -->
+          <view class="bars-container">
+            <!-- 发力 -->
+            <view class="bar-item">
+              <text class="bar-value">{{result.technique.power}}</text>
+              <view class="bar-track">
+                <view class="bar-fill bar-power" style="height: {{result.technique.power > 100 ? 100 : result.technique.power}}%"></view>
+              </view>
+              <text class="bar-label">发力</text>
+            </view>
+            
+            <!-- 角度 -->
+            <view class="bar-item">
+              <text class="bar-value">{{result.technique.angle}}</text>
+              <view class="bar-track">
+                <view class="bar-fill bar-angle" style="height: {{result.technique.angle > 100 ? 100 : result.technique.angle}}%"></view>
+              </view>
+              <text class="bar-label">角度</text>
+            </view>
+            
+            <!-- 协调性 -->
+            <view class="bar-item">
+              <text class="bar-value">{{result.technique.coordination}}</text>
+              <view class="bar-track">
+                <view class="bar-fill bar-coordination" style="height: {{result.technique.coordination > 100 ? 100 : result.technique.coordination}}%"></view>
+              </view>
+              <text class="bar-label">协调性</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 综合评分 -->
+        <view class="score-footer">
+          <text class="score-label">动作评分：</text>
+          <view class="score-display">
+            <text class="score-number">{{result.score}}</text>
+            <text class="score-total">优异 (Top {{result.rankPosition || 0}}%)</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 专业建议 -->
+    <view class="suggestions-section">
+      <text class="section-title-text">专业建议</text>
+      <view class="suggestions-card">
+        <view class="suggestions-list">
+          <view class="suggestion-item" wx:for="{{result.suggestions}}" wx:key="index" wx:for-item="item" wx:for-index="idx">
+            <view class="suggestion-icon">{{item.icon || '💡'}}</view>
+            <view class="suggestion-content">
+              <text class="suggestion-title">{{item.title}}</text>
+              <text class="suggestion-desc">{{item.desc}}</text>
+            </view>
+          </view>
+        </view>
+        <!-- 右侧装饰图 -->
+        <view class="suggestion-decoration">
+          <view class="decoration-placeholder">🏸</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 排名信息 -->
+    <view class="ranking-section">
+      <view class="ranking-card">
+        <view class="ranking-left">
+          <view class="ranking-icon">🏆</view>
+          <view class="ranking-info">
+            <text class="ranking-title">全球排名</text>
+            <text class="ranking-subtitle">业余联赛 (Lvl 5)</text>
+          </view>
+        </view>
+        <view class="ranking-right">
+          <text class="ranking-value">前 {{result.rankPosition || 0}}%</text>
+          <text class="ranking-region">地区: 亚洲</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 加载状态 -->
+  <view class="loading-container" wx:if="{{loading || !result}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+  
+  <!-- 空状态 -->
+  <view class="empty-container" wx:if="{{!loading && !result}}">
+    <text class="empty-icon">📊</text>
+    <text class="empty-text">暂无分析结果</text>
+    <button class="empty-btn" bindtap="handleBack">返回</button>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="footer" wx:if="{{result && !loading}}">
+    <button class="share-btn" bindtap="handleShare">
+      <text class="share-icon">📤</text>
+      <text>分享战报</text>
+    </button>
+    <view class="footer-actions">
+      <text class="footer-label">快速分享到</text>
+      <view class="footer-icons">
+        <view class="footer-icon">💬</view>
+        <view class="footer-icon">📷</view>
+        <view class="footer-icon">⬇️</view>
+      </view>
+    </view>
+  </view>
+</view>

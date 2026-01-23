@@ -1,0 +1,147 @@
+<!--pages/index/index.wxml-->
+<view class="page-container">
+  <!-- 顶部导航栏 -->
+  <view class="header">
+    <view class="header-content">
+      <view class="user-info" wx:if="{{isLoggedIn && userInfo}}">
+        <image class="avatar" src="{{userInfo.avatar_url || ''}}" mode="aspectFill" binderror="handleImageError" data-type="avatar"></image>
+        <view class="user-text">
+          <text class="welcome-text">欢迎回来</text>
+          <text class="username">{{userInfo.nickname || userInfo.username}}</text>
+        </view>
+      </view>
+      <view class="user-info" wx:else>
+        <view class="user-text">
+          <text class="welcome-text">未登录</text>
+          <view class="login-btn-wrapper">
+            <button class="login-btn" size="mini" bindtap="handleLogin">立即登录</button>
+          </view>
+        </view>
+      </view>
+      <view class="header-actions">
+        <view class="icon-btn" bindtap="goToProfile" wx:if="{{isLoggedIn}}">
+          <text class="icon">👤</text>
+        </view>
+        <view class="icon-btn" wx:if="{{!isLoggedIn}}">
+          <text class="icon">🔔</text>
+        </view>
+        <view class="icon-btn" wx:if="{{!isLoggedIn}}">
+          <text class="icon">⚙️</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 主要内容区域 -->
+  <scroll-view class="content" scroll-y>
+    <!-- Hero卡片 - 显示最佳杀球速度 -->
+    <view class="hero-card" wx:if="{{isLoggedIn}}">
+      <view class="hero-badge">
+        <text class="badge-text">{{heroData.level || '初级'}}</text>
+      </view>
+      <view class="hero-content">
+        <view class="hero-left">
+          <view class="rank-info">
+            <text class="rank-label">全国排名:</text>
+            <text class="rank-value">第 {{heroData.rank || 0}} 名</text>
+          </view>
+          <view class="speed-display">
+            <text class="speed-number">{{heroData.bestSpeed || 0}}</text>
+            <text class="speed-unit">km/h</text>
+          </view>
+          <text class="speed-label">个人最佳杀球时速</text>
+        </view>
+        <button class="detail-btn" bindtap="switchToProfile">详细数据</button>
+      </view>
+    </view>
+
+    <!-- 开始分析按钮 -->
+    <view class="action-section">
+      <button class="start-btn neon-glow" bindtap="handleChooseVideo" disabled="{{!isLoggedIn}}">
+        <text class="btn-icon">📹</text>
+        <text>开始分析杀球</text>
+      </button>
+    </view>
+
+    <!-- AI智能建议卡片 -->
+    <view class="ai-insight-card" wx:if="{{isLoggedIn && recentRecords.length > 0}}">
+      <view class="insight-icon">🧠</view>
+      <view class="insight-content">
+        <text class="insight-label">AI 智能建议</text>
+        <text class="insight-text">你在上一场训练中的表现提升了 <text class="highlight">12%</text>。请继续保持这个挥拍节奏！</text>
+      </view>
+    </view>
+
+    <!-- 最近记录 -->
+    <view class="records-section" wx:if="{{isLoggedIn && recentRecords.length > 0}}">
+      <view class="section-header">
+        <text class="section-title">最近记录</text>
+        <text class="section-more" bindtap="switchToProfile">查看全部 ></text>
+      </view>
+      <view class="records-grid">
+        <view class="record-card" wx:for="{{recentRecords}}" wx:key="id" bindtap="viewRecordDetail" data-id="{{item.id}}">
+          <view class="record-thumbnail" wx:if="{{item.thumbnail}}" style="background-image: url('{{item.thumbnail}}')">
+            <view class="record-overlay"></view>
+            <view class="record-speed-badge">
+              <text class="speed-icon">⚡</text>
+              <text>{{item.speed}} km/h</text>
+            </view>
+          </view>
+          <view class="record-thumbnail" wx:else>
+            <view class="record-thumbnail-placeholder">🏸</view>
+            <view class="record-overlay"></view>
+            <view class="record-speed-badge">
+              <text class="speed-icon">⚡</text>
+              <text>{{item.speed}} km/h</text>
+            </view>
+          </view>
+          <view class="record-info">
+            <view class="record-header">
+              <text class="record-title">{{item.title}}</text>
+              <text class="record-tag">{{item.level}}</text>
+            </view>
+            <view class="record-footer">
+              <text class="record-date">{{item.date}}</text>
+              <text class="record-count">{{item.count || 1}} 次杀球</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 未登录提示 -->
+    <view class="empty-state" wx:if="{{!isLoggedIn}}">
+      <text class="empty-icon">🏸</text>
+      <text class="empty-text">登录后查看你的杀球记录</text>
+      <button class="empty-btn" bindtap="handleLogin">立即登录</button>
+    </view>
+  </scroll-view>
+
+  <!-- 底部导航栏 -->
+  <view class="bottom-nav">
+    <view class="nav-item active">
+      <text class="nav-icon">🏠</text>
+      <text class="nav-label">首页</text>
+    </view>
+    <view class="nav-item">
+      <text class="nav-icon">📊</text>
+      <text class="nav-label">训练记录</text>
+    </view>
+    <view class="nav-item">
+      <text class="nav-icon">🏆</text>
+      <text class="nav-label">排行榜</text>
+    </view>
+    <view class="nav-item" bindtap="switchToProfile">
+      <text class="nav-icon">👤</text>
+      <text class="nav-label">个人中心</text>
+    </view>
+  </view>
+
+  <!-- 分析中遮罩 -->
+  <view class="analyzing-overlay" wx:if="{{isAnalyzing}}">
+    <view class="analyzing-content">
+      <view class="loading-spinner"></view>
+      <text class="analyzing-text">{{statusText}}</text>
+    </view>
+  </view>
+</view>
